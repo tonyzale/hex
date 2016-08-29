@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html ng-app="hexApp">
+
+<head>
+  <link rel="stylesheet" href="app.css">
+  <script src="node_modules/angular/angular.js"></script>
+  <script src="tsc.js"></script>
+  <script src="app.js"></script>
+  <title>Hex</title>
+</head>
+
+<body ng-controller="HexController">
+  Hex
+  <div>
+    <svg viewbox="{{viewbox}}">
+      <polygon points="{{hex.poly_string}}" />
+      <polygon points="75,7 25,7 0,50 25,93 75,93 100,50 75,7" />
+    </svg>
+  </div>
+</body>
+
+</html>
