@@ -13,8 +13,7 @@
   Hex
   <div>
     <svg viewbox="{{viewbox}}">
-      <polygon points="{{hex.poly_string}}" />
-      <polygon points="75,7 25,7 0,50 25,93 75,93 100,50 75,7" />
+      <polygon ng-repeat="hex in hexgame.hexes" points="{{hex.poly_string}}" />
     </svg>
   </div>
 </body>
