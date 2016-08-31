@@ -16,3 +16,11 @@ polygon {
 .blue {
   fill:royalblue;
 }
+
+.hover {
+  fill:lightpink;
+}
+
+.adjacent {
+  fill:gold;
+}

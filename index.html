@@ -3,17 +3,17 @@
 
 <head>
   <link rel="stylesheet" href="app.css">
-  <script src="node_modules/angular/angular.js"></script>
+  <script src="node_modules/angular/angular.min.js"></script>
   <script src="tsc.js"></script>
   <script src="app.js"></script>
   <title>Hex</title>
 </head>
 
 <body ng-controller="HexController">
-  Hex
+  {{hexgame.current_player_name()}}'s turn
   <div>
     <svg viewbox="{{viewbox}}">
-      <polygon ng-class="hex.class_name()" ng-repeat="hex in hexgame.board.hexes" ng-click="hexgame.click(hex.id)" points="{{hex.poly_string}}" />
+      <polygon ng-class="hex.class_name()" ng-repeat="hex in hexgame.board.hexes" ng-click="hexgame.click(hex.id)" ng-mouseenter="hexgame.hex_enter(hex.id)" ng-mouseleave="hexgame.hex_leave(hex.id)" points="{{hex.poly_string}}" />
     </svg>
   </div>
 </body>
