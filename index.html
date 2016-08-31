@@ -13,7 +13,7 @@
   Hex
   <div>
     <svg viewbox="{{viewbox}}">
-      <polygon ng-repeat="hex in hexgame.hexes" points="{{hex.poly_string}}" />
+      <polygon ng-class="{selected: hex.selected}" ng-repeat="hex in hexgame.hexes" ng-click="hex.selected = !hex.selected" points="{{hex.poly_string}}" />
     </svg>
   </div>
 </body>

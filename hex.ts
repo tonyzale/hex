@@ -3,6 +3,7 @@ namespace HexGame {
   export class Hex {
     outer_r: number;
     corners: [number, number][] = [];
+    selected = false;
     poly_string = "";
     constructor(public x: number, public y: number, public inner_r: number) {
       // outer r is a side-length of the triangles forming the hex

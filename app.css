@@ -1,6 +1,10 @@
 polygon {
-  fill:lime;
+  fill:lightyellow;
   stroke:purple;
   stroke-width:2;
   fill-rule:evenodd;
+}
+
+.selected {
+  fill:lime;
 }
