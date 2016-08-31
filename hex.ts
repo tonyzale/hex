@@ -1,11 +1,11 @@
 namespace HexGame {
 
-  export class Hex {
+  class Hex {
     outer_r: number;
     corners: [number, number][] = [];
-    selected = false;
+    owner: Player;
     poly_string = "";
-    constructor(public x: number, public y: number, public inner_r: number) {
+    constructor(public x: number, public y: number, public inner_r: number, public id: number) {
       // outer r is a side-length of the triangles forming the hex
       this.outer_r = inner_r / Math.sqrt(3) * 2;
       var top = y - inner_r;
@@ -25,9 +25,13 @@ namespace HexGame {
       }
       this.poly_string += `${this.corners[0][0]},${this.corners[0][1]}`;
     }
+    class_name(): string {
+      if (this.owner === undefined) return "unowned";
+      return this.owner.class_name;
+    }
   }
 
-  export class Gameboard {
+  class Gameboard {
     hex_board: Hex[][] = [];
     hexes: Hex[] = [];
     constructor(public side_size: number) {
@@ -38,7 +42,7 @@ namespace HexGame {
       for (var i = 0; i < side_size; ++i) {
         this.hex_board[i] = [];
         for (var j = 0; j < side_size; ++j) {
-          this.hex_board[i][j] = new Hex(x, y, hex_rad);
+          this.hex_board[i][j] = new Hex(x, y, hex_rad, hex_count);
           this.hexes[hex_count++] = this.hex_board[i][j];
           y += hex_rad * 2;;
         }
@@ -48,6 +52,22 @@ namespace HexGame {
           y = hex_rad * 2;
         }
         x += this.hexes[0].outer_r * 1.5;
+      }
+    }
+  }
+
+  class Player {
+    constructor(public name: string, public class_name: string) {}
+  }
+
+  export class Game {
+    board: Gameboard = new Gameboard(11);
+    players = [new Player("P1", "red"), new Player("P2", "blue")];
+    current_player = 0;
+    click(id: number) {
+      if (this.board.hexes[id].owner === undefined) {
+        this.board.hexes[id].owner = this.players[this.current_player];
+        this.current_player = (this.current_player + 1) % 2;
       }
     }
   }

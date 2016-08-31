@@ -5,6 +5,14 @@ polygon {
   fill-rule:evenodd;
 }
 
-.selected {
-  fill:lime;
+.unowned {
+  fill:whitesmoke;
+}
+
+.red {
+  fill:red;
+}
+
+.blue {
+  fill:royalblue;
 }
