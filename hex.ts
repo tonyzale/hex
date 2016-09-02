@@ -110,17 +110,62 @@ namespace HexGame {
     board: Gameboard = new Gameboard(11);
     players = [new Player("P1", "red"), new Player("P2", "blue")];
     current_player_id = 0;
+    winner: Player = undefined;
     click(id: number) {
       if (this.board.hexes[id].owner === undefined) {
         this.board.hexes[id].owner = this.players[this.current_player_id];
         this.current_player_id = (this.current_player_id + 1) % 2;
+        this.winner = this.check_winner();
       }
     }
     current_player_name(): string {
       return this.players[this.current_player_id].name;
     }
-    check_winner(): Player {
 
+    hexlist_contains(hex_list:Hex[], hex: Hex): boolean {
+      for (let h of hex_list) {
+        if (h === hex) {
+          return true;
+        }
+      }
+      return false;
+    }
+
+    can_reach(open: Hex[], destination: Hex[], explored: Hex[], adjacent_filter: (hex:Hex)=>boolean): boolean {
+      while (open.length > 0) {
+        let current = open.pop();
+        if (this.hexlist_contains(destination, current)) {
+          return true;
+        }
+        explored.push(current);
+        let adjacents = this.board.adjacent_hexes(current).filter(adjacent_filter);
+        for (let hex of adjacents) {
+          if (!this.hexlist_contains(explored, hex)) {
+            open.push(hex);
+          }
+        }
+      }
+      return false;
+    }
+
+    check_winner(): Player {
+      let start_p1: Hex[] = [];
+      let destination_p1: Hex[] = [];
+      let start_p2: Hex[] = [];
+      let destination_p2: Hex[] = [];
+      for (let i = 0; i < this.board.side_size; i++) {
+        start_p1.push(this.board.hex_board[0][i]);
+        destination_p1.push(this.board.hex_board[this.board.side_size - 1][i]);
+        start_p2.push(this.board.hex_board[i][0]);
+        destination_p2.push(this.board.hex_board[i][this.board.side_size - 1]);
+      }
+      let game = this;
+      if (this.can_reach(start_p1, destination_p1, start_p1.slice(0), function(hex:Hex){ return hex.owner === game.players[0];})) {
+        return this.players[0];
+      }
+      if (this.can_reach(start_p2, destination_p2, start_p2.slice(0), function(hex:Hex){ return hex.owner === game.players[1];})) {
+        return this.players[1];
+      }
       return undefined;
     }
 

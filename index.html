@@ -10,7 +10,12 @@
 </head>
 
 <body ng-controller="HexController">
+  <div ng-if="hexgame.winner === undefined">
   {{hexgame.current_player_name()}}'s turn
+  </div>
+  <div ng-if="hexgame.winner != undefined">
+    Winner: {{hexgame.winner.name}}
+  </div>
   <div>
     <svg viewbox="{{viewbox}}">
       <polygon ng-class="hex.class_name()" ng-repeat="hex in hexgame.board.hexes" ng-click="hexgame.click(hex.id)" ng-mouseenter="hexgame.hex_enter(hex.id)" ng-mouseleave="hexgame.hex_leave(hex.id)" points="{{hex.poly_string}}" />
