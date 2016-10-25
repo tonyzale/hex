@@ -36,6 +36,7 @@ namespace HexGame {
   class Gameboard {
     hex_board: Hex[][] = [];
     hexes: Hex[] = [];
+    left_border_points: string = "";
     constructor(public side_size: number) {
       let hex_rad = 50;
       let x = hex_rad * 2;
@@ -55,6 +56,17 @@ namespace HexGame {
         }
         x += this.hexes[0].outer_r * 1.5;
       }
+      for (let j = 0; j < side_size; ++j) {
+        const hex = this.hex_board[0][j];
+        this.left_border_points += `${hex.corners[1][0]},${hex.corners[1][1]} ${hex.corners[0][0]},${hex.corners[0][1]} `;
+      }
+      this.left_border_points += `${this.hex_board[0][10].corners[5][0]},${this.hex_board[0][10].corners[5][1] } `;
+      this.left_border_points += `${this.hex_board[0][10].corners[5][0] - 5},${this.hex_board[0][10].corners[5][1] } `;
+      for (let j = side_size - 1; j >= 0; --j) {
+        const hex = this.hex_board[0][j];
+        this.left_border_points += `${hex.corners[0][0] - 5},${hex.corners[0][1]} ${hex.corners[1][0] - 5},${hex.corners[1][1]} `;
+      }
+      this.left_border_points += `${this.hex_board[0][0].corners[1][0]},${this.hex_board[0][0].corners[1][1]}`;
     }
 
     valid_loc(i: number, j: number): boolean {
