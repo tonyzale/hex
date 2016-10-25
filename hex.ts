@@ -41,12 +41,12 @@ namespace HexGame {
       let x = hex_rad * 2;
       let y = hex_rad * 2;
       let hex_count = 0;
-      for (var i = 0; i < side_size; ++i) {
+      for (let i = 0; i < side_size; ++i) {
         this.hex_board[i] = [];
         for (let j = 0; j < side_size; ++j) {
           this.hex_board[i][j] = new Hex(x, y, hex_rad, hex_count);
           this.hexes[hex_count++] = this.hex_board[i][j];
-          y += hex_rad * 2;;
+          y += hex_rad * 2;
         }
         if (i % 2 === 0) {
           y = hex_rad * 3;
@@ -121,7 +121,7 @@ namespace HexGame {
       return this.players[this.current_player_id].name;
     }
 
-    hexlist_contains(hex_list:Hex[], hex: Hex): boolean {
+    hexlist_contains(hex_list: Hex[], hex: Hex): boolean {
       for (let h of hex_list) {
         if (h === hex) {
           return true;
