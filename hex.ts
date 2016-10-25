@@ -170,7 +170,7 @@ namespace HexGame {
 
     hex_enter(id: number) {
       if (this.board.hexes[id].owner === undefined) {
-        this.board.hexes[id].temp_class = "hover";
+        this.board.hexes[id].temp_class = "hover_" + this.players[this.current_player_id].class_name;
       }
       let adjacents = this.board.adjacent_hexes(this.board.hexes[id]);
       adjacents.forEach(function(h) {
@@ -181,7 +181,8 @@ namespace HexGame {
     }
 
     hex_leave(id: number) {
-      if (this.board.hexes[id].temp_class === "hover") {
+      const temp_class = this.board.hexes[id].temp_class;
+      if (temp_class === "hover_red" || temp_class === "hover_blue") {
         this.board.hexes[id].temp_class = "";
       }
       let adjacents = this.board.adjacent_hexes(this.board.hexes[id]);

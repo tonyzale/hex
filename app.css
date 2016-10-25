@@ -17,8 +17,12 @@ polygon {
   fill:royalblue;
 }
 
-.hover {
+.hover_red {
   fill:lightpink;
+}
+
+.hover_blue {
+  fill: lightblue;
 }
 
 .adjacent {
