@@ -5,7 +5,8 @@
     "removeComments": true,
     "preserveConstEnums": true,
     "outFile": "tsc.js",
-    "sourceMap": true
+    "sourceMap": true,
+    "watch": true
   },
   "exclude": [
     "tsc.js"
