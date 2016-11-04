@@ -17,6 +17,11 @@ polygon {
   fill:royalblue;
 }
 
+.border {
+  stroke: black;
+  stroke-width: 1;
+}
+
 .hover_red {
   fill:lightpink;
 }

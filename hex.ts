@@ -37,6 +37,9 @@ namespace HexGame {
     hex_board: Hex[][] = [];
     hexes: Hex[] = [];
     left_border_points: string = "";
+    right_border_points: string = "";
+    top_border_points: string = "";
+    bottom_border_points: string = "";
     constructor(public side_size: number) {
       let hex_rad = 50;
       let x = hex_rad * 2;
@@ -57,16 +60,32 @@ namespace HexGame {
         x += this.hexes[0].outer_r * 1.5;
       }
       for (let j = 0; j < side_size; ++j) {
-        const hex = this.hex_board[0][j];
-        this.left_border_points += `${hex.corners[1][0]},${hex.corners[1][1]} ${hex.corners[0][0]},${hex.corners[0][1]} `;
+        const left_hex = this.hex_board[0][j].corners;
+        this.left_border_points += `${left_hex[1][0]},${left_hex[1][1]} ${left_hex[0][0]},${left_hex[0][1]} `;
+        const right_hex = this.hex_board[side_size - 1][j].corners;
+        this.right_border_points += `${right_hex[2][0]},${right_hex[2][1]} ${right_hex[3][0]},${right_hex[3][1]} `;
+
+        const top_hex = this.hex_board[j][0].corners;
+        const bottom_hex = this.hex_board[j][side_size - 1].corners;
+        this.top_border_points += `${top_hex[1][0]},${top_hex[1][1]} ${top_hex[2][0]},${top_hex[2][1]} `;
+        this.bottom_border_points += `${bottom_hex[5][0]},${bottom_hex[5][1]} ${bottom_hex[4][0]},${bottom_hex[4][1]} `;
       }
-      this.left_border_points += `${this.hex_board[0][10].corners[5][0]},${this.hex_board[0][10].corners[5][1] } `;
-      this.left_border_points += `${this.hex_board[0][10].corners[5][0] - 5},${this.hex_board[0][10].corners[5][1] } `;
+      const border_width = 5;
+      this.left_border_points += `${this.hex_board[0][side_size - 1].corners[5][0]},${this.hex_board[0][side_size - 1].corners[5][1]} `;
+      this.left_border_points += `${this.hex_board[0][side_size - 1].corners[5][0] - border_width},${this.hex_board[0][side_size - 1].corners[5][1]} `;
+      this.right_border_points += `${this.hex_board[side_size - 1][side_size - 1].corners[4][0]},${this.hex_board[0][side_size - 1].corners[4][1]} `;
+      this.right_border_points += `${this.hex_board[side_size - 1][side_size - 1].corners[4][0] + border_width},${this.hex_board[0][side_size - 1].corners[4][1]} `;
       for (let j = side_size - 1; j >= 0; --j) {
-        const hex = this.hex_board[0][j];
-        this.left_border_points += `${hex.corners[0][0] - 5},${hex.corners[0][1]} ${hex.corners[1][0] - 5},${hex.corners[1][1]} `;
+        const left_hex = this.hex_board[0][j].corners;
+        this.left_border_points += `${left_hex[0][0] - border_width},${left_hex[0][1]} ${left_hex[1][0] - border_width},${left_hex[1][1]} `;
+        const right_hex = this.hex_board[side_size - 1][j].corners;
+        this.right_border_points += `${right_hex[3][0] + border_width},${right_hex[3][1]} ${right_hex[2][0] + border_width},${right_hex[2][1]} `;
+
+        const top_hex = this.hex_board[j][0].corners;
+        const bottom_hex = this.hex_board[j][side_size - 1].corners;
+        this.bottom_border_points += `${bottom_hex[4][0]},${bottom_hex[4][1] + border_width} ${bottom_hex[5][0]},${bottom_hex[5][1] + border_width} `;
+        this.top_border_points += `${top_hex[2][0]},${top_hex[2][1] - border_width} ${top_hex[1][0]},${top_hex[1][1] - border_width} `;
       }
-      this.left_border_points += `${this.hex_board[0][0].corners[1][0]},${this.hex_board[0][0].corners[1][1]}`;
     }
 
     valid_loc(i: number, j: number): boolean {
