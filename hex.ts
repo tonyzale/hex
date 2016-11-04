@@ -1,3 +1,5 @@
+/// <reference path='../DefinitelyTyped/angularjs/angular.d.ts' />
+
 namespace HexGame {
 
   class Hex {
@@ -225,3 +227,11 @@ namespace HexGame {
     }
   }
 }
+
+let hexApp: angular.IModule = angular.module("hexApp", []);
+
+hexApp.controller("HexController", function HexController($scope) {
+  // setup scope here.
+  $scope.viewbox = "-10 -10 2000 2000";
+  $scope.hexgame = new HexGame.Game();
+});
