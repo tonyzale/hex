@@ -4,7 +4,7 @@
     "noImplicitAny": true,
     "removeComments": true,
     "preserveConstEnums": true,
-    "outFile": "tsc.js",
+    "outFile": "app/serve/tsc.js",
     "sourceMap": true,
     "watch": true
   },
@@ -12,6 +12,6 @@
     "tsc.js"
   ],
   "files": [
-    "hex.ts"
+    "app/hex.ts"
   ]
 }

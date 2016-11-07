@@ -1,0 +1,27 @@
+{
+  "name": "hex",
+  "version": "1.0.0",
+  "description": "",
+  "main": "hex_server.js",
+  "dependencies": {
+    "angular": "^1.5.8",
+    "angular-route": "^1.5.7",
+    "express": "^4.14.0",
+    "swig": "^1.4.2",
+    "typescript": "^2.1.0-dev.20161024"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tonyzale/hex.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tonyzale/hex/issues"
+  },
+  "homepage": "https://github.com/tonyzale/hex#readme"
+}
