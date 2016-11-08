@@ -1,2 +1,4 @@
 Game List</br>
-<a href="#/Game">Dummy Game</a>
+<ul>
+  <li ng-repeat="game in gameManager.games"><a ng-href="#/Game/{{game.id}}">{{game.id}}</a></li>
+</ul>

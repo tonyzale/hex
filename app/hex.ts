@@ -227,16 +227,30 @@ namespace HexGame {
       });
     }
   }
+
+  export class GameRecord {
+    constructor(public game: Game, public id: string){}
+  }
+
+  export class GameManager {
+    gamesById:{[id:string]:HexGame.GameRecord} = {};
+    games: HexGame.GameRecord[] = [];
+    addGame(game: Game, id: string) {
+      this.gamesById[id] = new HexGame.GameRecord(game, id);
+      this.games = [];
+      for (let id in this.gamesById) {
+        this.games.push(this.gamesById[id]);
+      }
+    }
+  }
 }
 
 let hexApp: angular.IModule = angular.module("hexApp", ["ngRoute"]);
 
 hexApp.service("gameManager", function(){
-  class GameManager {
-    getGames(): HexGame.Game[] {
-      return [];
-    }
-  }
+  let manager = new HexGame.GameManager();
+  manager.addGame(new HexGame.Game(), "my-id");
+  return manager;
 });
 
 hexApp.controller('MainController', function MainController($scope, $route, $routeParams, $location) {
@@ -245,19 +259,19 @@ hexApp.controller('MainController', function MainController($scope, $route, $rou
      $scope.$routeParams = $routeParams;
  })
 
-hexApp.controller("GameController", function GameController($scope) {
+hexApp.controller("GameController", function GameController($scope, $routeParams, gameManager: HexGame.GameManager) {
   // setup scope here.
   $scope.viewbox = "-10 -10 2000 2000";
-  $scope.hexgame = new HexGame.Game();
+  $scope.hexgame = gameManager.gamesById[$routeParams["id"]].game;
 });
 
-hexApp.controller("GameListController", function GameListController($scope) {
-
+hexApp.controller("GameListController", function GameListController($scope, gameManager) {
+  $scope.gameManager = gameManager;
 });
 
 hexApp.config(function($routeProvider: angular.route.IRouteProvider) {
   $routeProvider
-   .when('/Game', {
+   .when('/Game/:id', {
     templateUrl: 'game.html',
     controller: 'GameController'
   })

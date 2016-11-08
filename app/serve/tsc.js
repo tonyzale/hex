@@ -224,32 +224,51 @@ var HexGame;
         return Game;
     }());
     HexGame.Game = Game;
-})(HexGame || (HexGame = {}));
-var hexApp = angular.module("hexApp", ["ngRoute"]);
-hexApp.service("gameManager", function () {
+    var GameRecord = (function () {
+        function GameRecord(game, id) {
+            this.game = game;
+            this.id = id;
+        }
+        return GameRecord;
+    }());
+    HexGame.GameRecord = GameRecord;
     var GameManager = (function () {
         function GameManager() {
+            this.gamesById = {};
+            this.games = [];
         }
-        GameManager.prototype.getGames = function () {
-            return [];
+        GameManager.prototype.addGame = function (game, id) {
+            this.gamesById[id] = new HexGame.GameRecord(game, id);
+            this.games = [];
+            for (var id_1 in this.gamesById) {
+                this.games.push(this.gamesById[id_1]);
+            }
         };
         return GameManager;
     }());
+    HexGame.GameManager = GameManager;
+})(HexGame || (HexGame = {}));
+var hexApp = angular.module("hexApp", ["ngRoute"]);
+hexApp.service("gameManager", function () {
+    var manager = new HexGame.GameManager();
+    manager.addGame(new HexGame.Game(), "my-id");
+    return manager;
 });
 hexApp.controller('MainController', function MainController($scope, $route, $routeParams, $location) {
     $scope.$route = $route;
     $scope.$location = $location;
     $scope.$routeParams = $routeParams;
 });
-hexApp.controller("GameController", function GameController($scope) {
+hexApp.controller("GameController", function GameController($scope, $routeParams, gameManager) {
     $scope.viewbox = "-10 -10 2000 2000";
-    $scope.hexgame = new HexGame.Game();
+    $scope.hexgame = gameManager.gamesById[$routeParams["id"]].game;
 });
-hexApp.controller("GameListController", function GameListController($scope) {
+hexApp.controller("GameListController", function GameListController($scope, gameManager) {
+    $scope.gameManager = gameManager;
 });
 hexApp.config(function ($routeProvider) {
     $routeProvider
-        .when('/Game', {
+        .when('/Game/:id', {
         templateUrl: 'game.html',
         controller: 'GameController'
     })
